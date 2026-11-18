@@ -1,0 +1,52 @@
+[worldserver]
+
+########################################
+# mod-temucraft-account-wide
+########################################
+#
+#    Temucraft.AccountWide.Reputation.Enable
+#        Description: Reputation progress is shared by every character of an account. Each character only gets
+#                     the factions it can have (Faction.dbc: the other side's factions are never shared).
+#        Default:     1
+
+Temucraft.AccountWide.Reputation.Enable = 1
+
+#
+#    Temucraft.AccountWide.Reputation.Exclude
+#        Description: Faction IDs kept per character (comma separated). By default the pairs where earning one
+#                     costs the other: Aldor (932) / Scryers (934), Frenzyheart Tribe (1104) / The Oracles (1105).
+#        Default:     "932,934,1104,1105"
+
+Temucraft.AccountWide.Reputation.Exclude = "932,934,1104,1105"
+
+#
+#    Temucraft.AccountWide.Mounts
+#    Temucraft.AccountWide.Pets
+#    Temucraft.AccountWide.Recipes
+#    Temucraft.AccountWide.FlightPaths
+#    Temucraft.AccountWide.Titles
+#        Description: What one character of an account has, every character gets when it logs in: mounts and
+#                     companion pets (if its race and class may have them), recipes (if it has the profession, the
+#                     skill and any specialization the recipe needs), flight paths of its faction, titles.
+#        Default:     1, 1, 1, 1, 1
+
+Temucraft.AccountWide.Mounts = 1
+Temucraft.AccountWide.Pets = 1
+Temucraft.AccountWide.Recipes = 1
+Temucraft.AccountWide.FlightPaths = 1
+Temucraft.AccountWide.Titles = 1
+
+#
+#    Temucraft.AccountWide.LockedTrainers
+#        Description: Trainers in mod_temucraft_locked_trainer stay closed until any character of the account has
+#                     done their quest. GMs are never turned away.
+#        Default:     1
+
+Temucraft.AccountWide.LockedTrainers = 1
+
+#
+#    Temucraft.AccountWide.Announce
+#        Description: Says at login what came from the account's other characters.
+#        Default:     1
+
+Temucraft.AccountWide.Announce = 1
