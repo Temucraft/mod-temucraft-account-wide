@@ -50,3 +50,38 @@ Temucraft.AccountWide.LockedTrainers = 1
 #        Default:     1
 
 Temucraft.AccountWide.Announce = 1
+
+#
+#    Temucraft.AccountWide.Settings.Enable
+#        Description: A player's accounts share their game settings (like auto loot), key bindings and macros:
+#                     when one account saves a copy, the others get the same copy, on any PC. Accounts are linked
+#                     by the same e-mail (LinkByEmail) or by the player with ".shared link <account> <password>".
+#                     Needs "synchronize settings" on in the client (it is by default).
+#        Default:     1
+
+Temucraft.AccountWide.Settings.Enable = 1
+
+#
+#    Temucraft.AccountWide.Settings.LinkByEmail
+#        Description: Accounts with the same e-mail address share their settings without linking them first.
+#        Default:     1
+
+Temucraft.AccountWide.Settings.LinkByEmail = 1
+
+#
+#    Temucraft.AccountWide.Settings.AccountTypes
+#        Description: Which account copies are shared: 0 settings (auto loot...), 2 key bindings, 4 macros.
+#        Default:     "0,2,4"
+
+Temucraft.AccountWide.Settings.AccountTypes = "0,2,4"
+
+#
+#    Temucraft.AccountWide.Settings.Characters
+#    Temucraft.AccountWide.Settings.CharacterTypes
+#        Description: Also share each character's own copies with all the other characters of the linked accounts:
+#                     1 settings, 3 key bindings, 5 macros, 6 window layout, 7 chat windows. Off by default: many
+#                     players want different action bars on different classes.
+#        Default:     0, "3,5"
+
+Temucraft.AccountWide.Settings.Characters = 0
+Temucraft.AccountWide.Settings.CharacterTypes = "3,5"
