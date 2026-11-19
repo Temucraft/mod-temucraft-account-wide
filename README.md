@@ -35,3 +35,5 @@ SQL: `data/sql/db-characters/base`, `data/sql/db-world/base`. Settings: `conf/mo
 The 8 player-facing texts (chat messages, gossip options) are in the `module_string` table under the module name
 `mod-temucraft-account-wide`, so they can be changed without rebuilding. Translations go in `module_string_locale` with the same
 module and id plus the locale (`deDE`, `esES`, `frFR`, ...). If a row is missing the English text in the code is used.
+
+Part of the Temucraft modules for AzerothCore 3.3.5a.
