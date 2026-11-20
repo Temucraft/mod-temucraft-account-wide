@@ -58,7 +58,8 @@ namespace
     std::set<uint8> Types(std::string const& option, std::string const& fallback)
     {
         std::set<uint8> types;
-        for (std::string_view part : Acore::Tokenize(sConfigMgr->GetOption<std::string>(option, fallback), ',', false))
+        std::string list = sConfigMgr->GetOption<std::string>(option, fallback);
+        for (std::string_view part : Acore::Tokenize(list, ',', false))
             if (Optional<uint32> t = Acore::StringTo<uint32>(part); t && *t < NUM_ACCOUNT_DATA_TYPES)
                 types.insert(uint8(*t));
         return types;
