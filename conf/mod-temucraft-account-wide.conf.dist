@@ -45,6 +45,15 @@ Temucraft.AccountWide.Titles = 1
 Temucraft.AccountWide.LockedTrainers = 1
 
 #
+#    Temucraft.AccountWide.Vanity
+#        Description: Vanity items (world table mod_temucraft_vanity_item, for example the Stones and Scrolls of
+#                     Homecoming): one bought or found by any character is unlocked for the account, and every
+#                     character that may use it can summon it again (.collection summon, or the Vanity window).
+#        Default:     1
+
+Temucraft.AccountWide.Vanity = 1
+
+#
 #    Temucraft.AccountWide.Announce
 #        Description: Says at login what came from the account's other characters.
 #        Default:     1

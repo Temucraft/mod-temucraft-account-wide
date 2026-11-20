@@ -25,14 +25,24 @@ by the same e-mail address (`Temucraft.AccountWide.Settings.LinkByEmail`) or by 
 be shared too (`Temucraft.AccountWide.Settings.Characters`, off by default). Needs the client's "synchronize settings"
 (on by default). The Temucraft launcher can do the same on one PC without the server.
 
+**Vanity items.** Items listed in `mod_temucraft_vanity_item` (world), such as the Stones and Scrolls of Homecoming of
+mod-temucraft-travel, are unlocked for the whole account as soon as any character buys, loots or gets one. Every
+character that may use it (its faction, race and class) can then summon it again into its bags, never twice:
+`.collection vanity` lists them (and opens the Vanity window), `.collection summon <name>` brings one back. The Temucraft
+client's Vanity window (`/vanity`, or the Vanity button of the Wardrobe) shows each one with its icon, name and
+cooldown, and a Summon button; it talks to the server with addon messages (prefix `TVA`). A cooldown stays with the
+character, so summoning an item again doesn't reset it. More vanity items: add rows (`item`, `category` heading,
+`sort`). `Temucraft.AccountWide.Vanity` turns it off.
+
 **Locked trainers.** Trainers listed in `mod_temucraft_locked_trainer` (world) stay closed until any character of the
 account has done their quest; then they are open to all of them.
 
-SQL: `data/sql/db-characters/base`, `data/sql/db-world/base`. Settings: `conf/mod-temucraft-account-wide.conf.dist`. No client changes.
+SQL: `data/sql/db-characters/base`, `data/sql/db-world/base`. Settings: `conf/mod-temucraft-account-wide.conf.dist`. No client
+changes needed; the Vanity window is in the Temucraft client (mod-temucraft-client-version).
 
 ## Texts and translations
 
-The 8 player-facing texts (chat messages, gossip options) are in the `module_string` table under the module name
+The 20 player-facing texts (chat messages, gossip options) are in the `module_string` table under the module name
 `mod-temucraft-account-wide`, so they can be changed without rebuilding. Translations go in `module_string_locale` with the same
 module and id plus the locale (`deDE`, `esES`, `frFR`, ...). If a row is missing the English text in the code is used.
 
