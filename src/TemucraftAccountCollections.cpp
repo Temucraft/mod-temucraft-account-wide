@@ -48,6 +48,7 @@ using namespace Acore::ChatCommands;
 
 namespace
 {
+    // kinds 8 (costumes), 9 (form looks) and 10 (Lost Lands) are kept here too, but by their own modules
     enum Kind : uint8 { KIND_MOUNT = 1, KIND_PET = 2, KIND_RECIPE = 3, KIND_TAXI = 4, KIND_TITLE = 5, KIND_QUEST = 6, KIND_VANITY = 7 };
     constexpr uint8 KIND_COUNT = 8;
     constexpr char const* PREFIX = "TVA";
