@@ -14,21 +14,21 @@ progress, and what it earns is saved for the others.
 
 **Account-wide collections.** What one character has, every character of the account gets when it logs in:
 mounts and companion pets (if its race and class may have them), recipes and patterns (if it has the profession,
-enough skill and any specialization the recipe needs), flight paths of its faction, and titles. `.collection` shows
+enough skill and any specialization the recipe needs), flight paths of its faction, and titles. `.temucraft collection` shows
 what the account has shared.
 
 **Shared game settings.** A player's accounts keep the same game settings (auto loot and the rest of the
 interface options), key bindings and macros, on any PC: when one account saves a copy, the server gives the same copy,
 with the same time, to the player's other accounts, and the client takes it at their next login. Accounts are linked
 by the same e-mail address (`Temucraft.AccountWide.Settings.LinkByEmail`) or by the player with
-`.shared link <account> <password>` (`.shared list`, `.shared unlink`). Each character's own key bindings and macros can
+`.temucraft shared link <account> <password>` (`.temucraft shared list`, `.temucraft shared unlink`). Each character's own key bindings and macros can
 be shared too (`Temucraft.AccountWide.Settings.Characters`, off by default). Needs the client's "synchronize settings"
 (on by default). The Temucraft launcher can do the same on one PC without the server.
 
 **Vanity items.** Items listed in `mod_temucraft_vanity_item` (world), such as the Stones and Scrolls of Homecoming of
 mod-temucraft-travel, are unlocked for the whole account as soon as any character buys, loots or gets one. Every
 character that may use it (its faction, race and class) can then summon it again into its bags, never twice:
-`.collection vanity` lists them (and opens the Vanity window), `.collection summon <name>` brings one back. The Temucraft
+`.temucraft collection vanity` lists them (and opens the Vanity window), `.temucraft collection summon <name>` brings one back. The Temucraft
 client's Vanity window (`/vanity`, or the Vanity button of the Wardrobe) shows each one with its icon, name and
 cooldown, and a Summon button; it talks to the server with addon messages (prefix `TVA`). A cooldown stays with the
 character, so summoning an item again doesn't reset it. More vanity items: add rows (`item`, `category` heading,

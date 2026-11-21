@@ -7,7 +7,7 @@
  * CMSG_UPDATE_ACCOUNT_DATA whenever one changes, and at login takes the server's copy when it is newer than its own.
  *
  * Accounts are linked by the same e-mail address (Temucraft.AccountWide.Settings.LinkByEmail) or with
- * ".shared link <account> <password>". When one linked account saves a copy, the server writes the same copy, with the
+ * ".temucraft shared link <account> <password>". When one linked account saves a copy, the server writes the same copy, with the
  * same time, to the other accounts (and, with Temucraft.AccountWide.Settings.Characters, to all their characters),
  * so the next login on any of them, on any PC, picks it up.
  */
@@ -232,15 +232,15 @@ public:
     {
         static ChatCommandTable shared =
         {
-            { "link",   HandleLink,   SEC_PLAYER, Console::No },
-            { "unlink", HandleUnlink, SEC_PLAYER, Console::No },
-            { "list",   HandleList,   SEC_PLAYER, Console::No },
+            { "link",   HandleLink,   101853, Console::No },
+            { "unlink", HandleUnlink, 101854, Console::No },
+            { "list",   HandleList,   101855, Console::No },
         };
-        static ChatCommandTable commandTable = { { "shared", shared } };
+        static ChatCommandTable commandTable = { { "temucraft shared", shared } };
         return commandTable;
     }
 
-    // .shared link <account> <password>: proves the other account is yours, then both share their settings
+    // .temucraft shared link <account> <password>: proves the other account is yours, then both share their settings
     static bool HandleLink(ChatHandler* handler, std::string account, std::string password)
     {
         uint32 self = handler->GetSession()->GetAccountId();

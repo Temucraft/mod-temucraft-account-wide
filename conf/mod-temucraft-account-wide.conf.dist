@@ -48,7 +48,7 @@ Temucraft.AccountWide.LockedTrainers = 1
 #    Temucraft.AccountWide.Vanity
 #        Description: Vanity items (world table mod_temucraft_vanity_item, for example the Stones and Scrolls of
 #                     Homecoming): one bought or found by any character is unlocked for the account, and every
-#                     character that may use it can summon it again (.collection summon, or the Vanity window).
+#                     character that may use it can summon it again (.temucraft collection summon, or the Vanity window).
 #        Default:     1
 
 Temucraft.AccountWide.Vanity = 1
@@ -64,7 +64,7 @@ Temucraft.AccountWide.Announce = 1
 #    Temucraft.AccountWide.Settings.Enable
 #        Description: A player's accounts share their game settings (like auto loot), key bindings and macros:
 #                     when one account saves a copy, the others get the same copy, on any PC. Accounts are linked
-#                     by the same e-mail (LinkByEmail) or by the player with ".shared link <account> <password>".
+#                     by the same e-mail (LinkByEmail) or by the player with ".temucraft shared link <account> <password>".
 #                     Needs "synchronize settings" on in the client (it is by default).
 #        Default:     1
 

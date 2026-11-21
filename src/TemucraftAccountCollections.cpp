@@ -9,13 +9,13 @@
  *   titles
  *   vanity items                   (world table mod_temucraft_vanity_item, e.g. the Stones and Scrolls of Homecoming)
  *                                  one bought or found by any character is unlocked for the account; each character of
- *                                  a faction that may use it can summon it again (.collection summon, or the Vanity
+ *                                  a faction that may use it can summon it again (.temucraft collection summon, or the Vanity
  *                                  window of the Temucraft client, addon prefix TVA). Never twice, and its cooldown
  *                                  stays with the character, so summoning it again doesn't reset it.
  * Locked trainers (world table mod_temucraft_locked_trainer): a trainer stays closed until any character of the
  * account has done the quest that unlocks it; then it is open to every character.
  *
- * .collection shows what the account has shared, .collection vanity lists the vanity items. Each part has a switch in
+ * .temucraft collection shows what the account has shared, .temucraft collection vanity lists the vanity items. Each part has a switch in
  * the config.
  */
 
@@ -451,13 +451,13 @@ public:
     {
         static ChatCommandTable collectionTable =
         {
-            { "",       HandleCollection, SEC_PLAYER, Console::No },
-            { "vanity", HandleVanity,     SEC_PLAYER, Console::No },
-            { "summon", HandleSummon,     SEC_PLAYER, Console::No },
+            { "",       HandleCollection, 101850, Console::No },
+            { "vanity", HandleVanity,     101851, Console::No },
+            { "summon", HandleSummon,     101852, Console::No },
         };
         static ChatCommandTable commandTable =
         {
-            { "collection", collectionTable },
+            { "temucraft collection", collectionTable },
         };
         return commandTable;
     }
@@ -500,12 +500,12 @@ public:
         handler->PSendSysMessage(TemucraftModuleText("mod-temucraft-account-wide", handler, 11, "|cff66ccff[Account]|r Vanity items: {} of {} unlocked."), owned, total);
         for (std::string const& line : lines)
             handler->PSendSysMessage(TemucraftModuleText("mod-temucraft-account-wide", handler, 12, "  {}"), line);
-        handler->PSendSysMessage(TemucraftModuleText("mod-temucraft-account-wide", handler, 20, "|cff66ccff[Account]|r Summon one with .collection summon <name>, or use the Vanity window (/vanity)."));
+        handler->PSendSysMessage(TemucraftModuleText("mod-temucraft-account-wide", handler, 20, "|cff66ccff[Account]|r Summon one with .temucraft collection summon <name>, or use the Vanity window (/vanity)."));
         TemucraftAddonSend(player, PREFIX, "OPEN");
         return true;
     }
 
-    // .collection summon <item id, link or part of the name>
+    // .temucraft collection summon <item id, link or part of the name>
     static bool HandleSummon(ChatHandler* handler, Tail text)
     {
         Player* player = handler->GetPlayer();

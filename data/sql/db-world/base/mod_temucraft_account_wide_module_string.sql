@@ -20,4 +20,4 @@ INSERT INTO `module_string` (`module`, `id`, `string`) VALUES
 ('mod-temucraft-account-wide', 17, '|cff66ccff[Account]|r {} is not for this character.'),
 ('mod-temucraft-account-wide', 18, '|cff66ccff[Account]|r That isn''t a vanity item.'),
 ('mod-temucraft-account-wide', 19, '|cff66ccff[Account]|r Summoned {}.'),
-('mod-temucraft-account-wide', 20, '|cff66ccff[Account]|r Summon one with .collection summon <name>, or use the Vanity window (/vanity).');
+('mod-temucraft-account-wide', 20, '|cff66ccff[Account]|r Summon one with .temucraft collection summon <name>, or use the Vanity window (/vanity).');
