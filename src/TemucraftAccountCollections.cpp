@@ -330,6 +330,9 @@ public:
 
     void OnPlayerSave(Player* player) override { Gather(player); }
 
+    // the logout save has run by now (it gathers first); the account is read again at the next login
+    void OnPlayerLogout(Player* player) override { accounts.erase(player->GetSession()->GetAccountId()); }
+
     void OnPlayerLearnSpell(Player* player, uint32 spellId) override
     {
         if (uint8 kind = SpellKind(spellId))
