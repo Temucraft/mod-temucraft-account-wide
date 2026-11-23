@@ -20,6 +20,14 @@ Temucraft.AccountWide.Reputation.Enable = 1
 Temucraft.AccountWide.Reputation.Exclude = "932,934,1104,1105"
 
 #
+#    Temucraft.AccountWide.Reputation.SkipAccountPrefix
+#        Description: Accounts whose name starts with this don't share reputation (playerbot accounts). Empty: none
+#                     are skipped.
+#        Default:     "RNDBOT"
+
+Temucraft.AccountWide.Reputation.SkipAccountPrefix = "RNDBOT"
+
+#
 #    Temucraft.AccountWide.Mounts
 #    Temucraft.AccountWide.Pets
 #    Temucraft.AccountWide.Recipes

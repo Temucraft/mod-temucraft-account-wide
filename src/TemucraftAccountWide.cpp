@@ -12,6 +12,7 @@
  * Pairs where earning one costs the other (Aldor / Scryers, Frenzyheart / Oracles) are left per character by
  * default: Temucraft.AccountWide.Reputation.Exclude.
  */
+#include "AccountMgr.h"
 #include "Chat.h"
 #include "Config.h"
 #include "DBCStores.h"
@@ -24,6 +25,7 @@
 #include "StringConvert.h"
 #include "Tokenize.h"
 #include "WorldScript.h"
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -32,10 +34,40 @@ namespace
     bool sEnable = true;
     std::unordered_set<uint32> sExclude;
     std::unordered_set<ObjectGuid::LowType> sApplying;   // characters being synced (ignore their rep hooks)
+    // Playerbot accounts don't share reputation: each bot save wrote some 70 rows for nothing (and bots log out in
+    // bulk). Worked out once at login from the account name; saves run on the map threads, so the cache has a lock.
+    std::string sSkipPrefix = "RNDBOT";
+    std::unordered_map<uint32, bool> sSkipAccount;
+    std::mutex sSkipLock;
+
+    bool Skipped(uint32 account)
+    {
+        std::lock_guard lock(sSkipLock);
+        auto itr = sSkipAccount.find(account);
+        return itr != sSkipAccount.end() && itr->second;
+    }
+
+    void LearnAccount(uint32 account)
+    {
+        bool skip = false;
+        if (!sSkipPrefix.empty())
+        {
+            std::string name;
+            if (AccountMgr::GetName(account, name))
+                skip = name.compare(0, sSkipPrefix.size(), sSkipPrefix) == 0;
+        }
+        std::lock_guard lock(sSkipLock);
+        sSkipAccount[account] = skip;
+    }
 
     void LoadConfig()
     {
         sEnable = sConfigMgr->GetOption<bool>("Temucraft.AccountWide.Reputation.Enable", true);
+        sSkipPrefix = sConfigMgr->GetOption<std::string>("Temucraft.AccountWide.Reputation.SkipAccountPrefix", "RNDBOT");
+        {
+            std::lock_guard lock(sSkipLock);
+            sSkipAccount.clear();
+        }
         sExclude.clear();
         std::string list = sConfigMgr->GetOption<std::string>("Temucraft.AccountWide.Reputation.Exclude", "932,934,1104,1105");
         for (std::string_view id : Acore::Tokenize(list, ',', false))
@@ -71,6 +103,8 @@ namespace
         if (!sEnable)
             return;
         uint32 account = player->GetSession()->GetAccountId();
+        if (Skipped(account))
+            return;
         CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
         for (auto const& [listId, state] : player->GetReputationMgr().GetStateList())
         {
@@ -88,6 +122,9 @@ namespace
         if (!sEnable)
             return;
         uint32 account = player->GetSession()->GetAccountId();
+        LearnAccount(account);
+        if (Skipped(account))
+            return;
 
         std::unordered_map<uint32, int32> shared;
         QueryResult result = CharacterDatabase.Query("SELECT `faction`, `standing` FROM `mod_temucraft_account_wide_reputation` WHERE `account` = {}", account);
