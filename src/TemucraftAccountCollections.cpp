@@ -58,7 +58,27 @@ namespace
     struct CollectionSettings
     {
         bool mounts = true, pets = true, recipes = true, taxi = true, titles = true, trainers = true, vanity = true, announce = true;
+        bool mountsNeedRiding = true;
+        uint32 groundRiding = 75, flyingRiding = 225;
     } acfg;
+
+    constexpr uint32 SKILL_RIDING = 762;
+
+    // Riding skill a mount from the account needs: flying mounts the flying skill, the others the first rank
+    uint32 RidingNeeded(uint32 spellId)
+    {
+        SpellInfo const* info = sSpellMgr->GetSpellInfo(spellId);
+        if (!info)
+            return acfg.groundRiding;
+        if (info->HasAura(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || info->HasAura(SPELL_AURA_FLY))
+            return acfg.flyingRiding;
+        return acfg.groundRiding;
+    }
+
+    bool HasRidingFor(Player* player, uint32 spellId)
+    {
+        return !acfg.mountsNeedRiding || player->GetSkillValue(SKILL_RIDING) >= RidingNeeded(spellId);
+    }
 
     struct LockedTrainer { uint32 quest; std::string hint; };
     std::unordered_map<uint32, LockedTrainer> lockedTrainers;     // creature entry
@@ -152,6 +172,8 @@ namespace
             return false;
         if (ability->ClassMask && !(ability->ClassMask & player->getClassMask()))
             return false;
+        if (kind == KIND_MOUNT && !HasRidingFor(player, spellId))
+            return false;     // taught once the character has trained the riding it needs
         if (kind == KIND_RECIPE)
         {
             if (!player->HasSkill(ability->SkillLine) || player->GetSkillValue(ability->SkillLine) < ability->MinSkillLineRank)
@@ -161,6 +183,19 @@ namespace
                     return false;
         }
         return true;
+    }
+
+    // Account mounts a character got before it could ride: taken away until it trains riding (Apply gives them back)
+    void TakeEarlyMounts(Player* player)
+    {
+        if (!acfg.mounts || !acfg.mountsNeedRiding)
+            return;
+        std::vector<uint32> early;
+        for (auto const& [kind, id] : accounts[player->GetSession()->GetAccountId()])
+            if (kind == KIND_MOUNT && player->HasSpell(id) && !HasRidingFor(player, id))
+                early.push_back(id);
+        for (uint32 id : early)
+            player->removeSpell(id, SPEC_MASK_ALL, false);
     }
 
     // Gives this character what its account has
@@ -326,6 +361,7 @@ public:
     {
         LoadAccount(player->GetSession()->GetAccountId());
         Gather(player);
+        TakeEarlyMounts(player);
         Apply(player);
     }
 
@@ -338,6 +374,16 @@ public:
     {
         if (uint8 kind = SpellKind(spellId))
             Store(player->GetSession()->GetAccountId(), kind, spellId);
+        // trained riding: the account's mounts it can ride now
+        if (acfg.mounts && acfg.mountsNeedRiding)
+            if (SpellInfo const* info = sSpellMgr->GetSpellInfo(spellId))
+                for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+                    if ((info->Effects[i].Effect == SPELL_EFFECT_SKILL || info->Effects[i].Effect == SPELL_EFFECT_SKILL_STEP)
+                        && uint32(info->Effects[i].MiscValue) == SKILL_RIDING)
+                    {
+                        Apply(player);
+                        break;
+                    }
     }
 
     void OnPlayerLearnTaxiNode(Player const* player, uint32 nodeId) override
@@ -414,6 +460,9 @@ public:
         acfg.trainers = sConfigMgr->GetOption<bool>("Temucraft.AccountWide.LockedTrainers", true);
         acfg.vanity = sConfigMgr->GetOption<bool>("Temucraft.AccountWide.Vanity", true);
         acfg.announce = sConfigMgr->GetOption<bool>("Temucraft.AccountWide.Announce", true);
+        acfg.mountsNeedRiding = sConfigMgr->GetOption<bool>("Temucraft.AccountWide.Mounts.NeedRiding", true);
+        acfg.groundRiding = sConfigMgr->GetOption<uint32>("Temucraft.AccountWide.Mounts.GroundRiding", 75);
+        acfg.flyingRiding = sConfigMgr->GetOption<uint32>("Temucraft.AccountWide.Mounts.FlyingRiding", 225);
     }
 
     void OnStartup() override

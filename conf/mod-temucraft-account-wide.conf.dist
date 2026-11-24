@@ -45,6 +45,19 @@ Temucraft.AccountWide.FlightPaths = 1
 Temucraft.AccountWide.Titles = 1
 
 #
+#    Temucraft.AccountWide.Mounts.NeedRiding
+#    Temucraft.AccountWide.Mounts.GroundRiding
+#    Temucraft.AccountWide.Mounts.FlyingRiding
+#        Description: Mounts from the account only come once the character has trained riding: GroundRiding
+#                     skill for ground mounts, FlyingRiding for flying ones. A character that got them earlier loses
+#                     them until it trains riding, and gets them all back when it does.
+#        Default:     1, 75, 225
+
+Temucraft.AccountWide.Mounts.NeedRiding = 1
+Temucraft.AccountWide.Mounts.GroundRiding = 75
+Temucraft.AccountWide.Mounts.FlyingRiding = 225
+
+#
 #    Temucraft.AccountWide.LockedTrainers
 #        Description: Trainers in mod_temucraft_locked_trainer stay closed until any character of the account has
 #                     done their quest. GMs are never turned away.
