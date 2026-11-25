@@ -75,6 +75,14 @@ Temucraft.AccountWide.LockedTrainers = 1
 Temucraft.AccountWide.Vanity = 1
 
 #
+#    Temucraft.AccountWide.UiStore
+#        Description: Keeps what the Temucraft interface saves between sessions (favourite mounts and pets of the
+#                     Collections window, talent loadouts), per account or per character (addon prefix TUS).
+#        Default:     1
+
+Temucraft.AccountWide.UiStore = 1
+
+#
 #    Temucraft.AccountWide.Announce
 #        Description: Says at login what came from the account's other characters.
 #        Default:     1

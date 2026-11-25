@@ -34,6 +34,12 @@ cooldown, and a Summon button; it talks to the server with addon messages (prefi
 character, so summoning an item again doesn't reset it. More vanity items: add rows (`item`, `category` heading,
 `sort`). `Temucraft.AccountWide.Vanity` turns it off.
 
+**Interface store.** The Temucraft interface is built into the client's FrameXML, which can't keep SavedVariables, so
+what it saves between sessions is kept here, in `mod_temucraft_ui_store` (characters DB): favourite mounts and pets of
+the Collections window (per account) and talent loadouts (per character). Addon prefix `TUS`: the client asks `ALL` at
+login and gets `B~scope~key`, `D~scope~key~text`... `E~scope~key` per value, then `READY`; it saves with `SB`, `SD`, `SE`
+(begin, append, commit; an empty value deletes). `Temucraft.AccountWide.UiStore` turns it off.
+
 **Locked trainers.** Trainers listed in `mod_temucraft_locked_trainer` (world) stay closed until any character of the
 account has done their quest; then they are open to all of them.
 
