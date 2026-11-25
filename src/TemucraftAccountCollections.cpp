@@ -62,8 +62,6 @@ namespace
         uint32 groundRiding = 75, flyingRiding = 225;
     } acfg;
 
-    constexpr uint32 SKILL_RIDING = 762;
-
     // Riding skill a mount from the account needs: flying mounts the flying skill, the others the first rank
     uint32 RidingNeeded(uint32 spellId)
     {
