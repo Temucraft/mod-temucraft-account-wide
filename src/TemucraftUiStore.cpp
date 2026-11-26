@@ -163,8 +163,23 @@ public:
     }
 };
 
+// a deleted character's own UI data goes with it; the account's (guid 0) stays
+// OnPlayerDeleteFromDB: only when the character is really removed (not a CharDelete.Method = 1 unlink, which can be
+// restored), and in the same transaction as the core's own deletes.
+class TemucraftUiStore_Delete : public PlayerScript
+{
+public:
+    TemucraftUiStore_Delete() : PlayerScript("TemucraftUiStore_Delete", { PLAYERHOOK_ON_DELETE_FROM_DB }) { }
+
+    void OnPlayerDeleteFromDB(CharacterDatabaseTransaction trans, uint32 guid) override
+    {
+        trans->Append("DELETE FROM `mod_temucraft_ui_store` WHERE `guid` = {} AND `guid` <> 0", guid);
+    }
+};
+
 void AddTemucraftUiStoreScripts()
 {
     new TemucraftUiStore_Player();
     new TemucraftUiStore_World();
+    new TemucraftUiStore_Delete();
 }
