@@ -43,6 +43,7 @@
 #include <set>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 using namespace Acore::ChatCommands;
 
@@ -145,10 +146,15 @@ namespace
     void Gather(Player* player)
     {
         uint32 account = player->GetSession()->GetAccountId();
+        // the ids first, then the lookups and the stores: nothing else runs while the spell map is walked
+        std::vector<uint32> spellIds;
+        spellIds.reserve(player->GetSpellMap().size());
         for (auto const& [spellId, spell] : player->GetSpellMap())
-            if (spell->State != PLAYERSPELL_REMOVED)
-                if (uint8 kind = SpellKind(spellId))
-                    Store(account, kind, spellId);
+            if (spell && spell->State != PLAYERSPELL_REMOVED)
+                spellIds.push_back(spellId);
+        for (uint32 spellId : spellIds)
+            if (uint8 kind = SpellKind(spellId))
+                Store(account, kind, spellId);
         for (uint32 i = 0; i < sTaxiNodesStore.GetNumRows(); ++i)
             if (sTaxiNodesStore.LookupEntry(i) && player->m_taxi.IsTaximaskNodeKnown(i))
                 Store(account, KIND_TAXI, i);
