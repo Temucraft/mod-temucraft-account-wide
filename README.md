@@ -39,6 +39,10 @@ what it saves between sessions is kept here, in `mod_temucraft_ui_store` (charac
 the Collections window (per account) and talent loadouts (per character). Addon prefix `TUS`: the client asks `ALL` at
 login and gets `B~scope~key`, `D~scope~key~text`... `E~scope~key` per value, then `READY`; it saves with `SB`, `SD`, `SE`
 (begin, append, commit; an empty value deletes). `Temucraft.AccountWide.UiStore` turns it off.
+A character deleted for good (`OnPlayerDeleteFromDB`, in the same transaction as the core's own deletes; not a `CharDelete.Method = 1` unlink, which can be restored) takes its own
+`mod_temucraft_ui_store` rows with it; the account's rows (guid 0) stay.
+`data/sql/db-characters/base/mod_temucraft_ui_store_character_cleanup.sql` removes rows of characters deleted before;
+it is safe to run again.
 
 **Locked trainers.** Trainers listed in `mod_temucraft_locked_trainer` (world) stay closed until any character of the
 account has done their quest; then they are open to all of them.
